@@ -1,8 +1,11 @@
 package com.rafael.mongodb.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="user") //serve para informar o spring que e uma entidade do banco de dados 
@@ -14,6 +17,10 @@ public class User implements Serializable {
 	private String id;
 	private String name;
 	private String email;
+	
+	@DBRef(lazy = true)//lazy garante que a coleção so vão ser carregados se solicitados explicitamente na rquisição evitando trafego desnecessario na rede
+	
+	private Set<Post> posts = new HashSet<>();
 
 	public User() {
 
@@ -73,6 +80,14 @@ public class User implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Set<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
 	}
 
 }
