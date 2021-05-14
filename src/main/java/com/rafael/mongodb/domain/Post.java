@@ -2,11 +2,14 @@ package com.rafael.mongodb.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.rafael.mongodb.DTO.AuthorDTO;
+import com.rafael.mongodb.DTO.CommentDTO;
 
 @Document(collection="post")
 public class Post implements Serializable {
@@ -18,6 +21,7 @@ public class Post implements Serializable {
 	private String title;
 	private String body;
 	
+	private Set<CommentDTO> coments = new HashSet<>();
 	private AuthorDTO author;
 	
 	public Post() {
@@ -73,6 +77,15 @@ public class Post implements Serializable {
 		this.author = author;
 	}
 	
+	public Set<CommentDTO> getComents() {
+		return coments;
+	}
+
+	public void setComents(Set<CommentDTO> coments) {
+		this.coments = coments;
+	}
+
+	
 
 	@Override
 	public int hashCode() {
@@ -99,6 +112,7 @@ public class Post implements Serializable {
 		return true;
 	}
 
+	
 	
 	
 	
